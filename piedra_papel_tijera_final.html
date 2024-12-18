@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento</title>
+</head>
+<body>
+</body>
+<script>
+alert('Empieza el juego');
+alert('Elige una opción: piedra, papel o tijera');
+
+let puntajes = {
+    jugador: 0,
+    enemigo: 0
+};
+
+let terminar = false;
+
+const opciones = {
+    0: 'piedra',
+    1: 'papel',
+    2: 'tijera'
+};
+
+
+const obtenerEleccionJugador = () => {
+    let resultado = 3;
+    while (resultado == 3) {
+        let jugador = prompt('¿Qué eliges? escribe piedra, papel o tijera').toLowerCase();
+        if (jugador === opciones[0]) {
+            alert('Has elegido piedra');
+            resultado = 0;
+        } else if (jugador === opciones[1]) {
+            alert('Has elegido papel');
+            resultado = 1;
+        } else if (jugador === opciones[2]) {
+            alert('Has elegido tijera');
+            resultado = 2;
+        } else if (jugador === "terminar") {
+            alert('Juego terminado');
+            terminar = true;
+            break;
+        } else {
+            resultado = 3;
+            alert('Opción no válida, vuelve a intentarlo');
+        }
+    }
+    return resultado;
+};
+
+
+const obtenerEleccionEnemigo = () => {
+    return Math.floor(Math.random() * 3);
+};
+
+
+const mostrarResultado = (jugador, enemigo) => {
+    console.log(jugador, enemigo);
+    if (jugador === enemigo) {
+        alert('Empate');
+        puntajes.jugador++;
+        puntajes.enemigo++;
+    } else if ((jugador === 0 && enemigo === 2) || (jugador === 1 && enemigo === 0) 
+    || (jugador === 2 && enemigo === 1)) {
+        puntajes.jugador++;
+        alert('Has ganado');
+    } else {
+        puntajes.enemigo++;
+        alert('Has perdido');
+    }
+
+    alert(`Tu puntaje es: ${puntajes.jugador} y el del enemigo es: ${puntajes.enemigo}`);
+};
+
+while (!terminar) {
+    let resultadoJugador = obtenerEleccionJugador();
+    if (resultadoJugador < 3) {
+        let resultadoEnemigo = obtenerEleccionEnemigo();
+        alert(`El enemigo ha elegido ${opciones[resultadoEnemigo]}`);
+        mostrarResultado(resultadoJugador, resultadoEnemigo);
+    }
+}
+</script>
+</html>
